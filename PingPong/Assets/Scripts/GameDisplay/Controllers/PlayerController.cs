@@ -1,7 +1,7 @@
-﻿using Logic.Models;
-using View;
+﻿using GameDisplay.Views;
+using Logic.Models;
 
-namespace Controllers
+namespace GameDisplay.Controllers
 {
     public class PlayerController
     {

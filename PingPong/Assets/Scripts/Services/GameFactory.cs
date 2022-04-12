@@ -1,4 +1,5 @@
-﻿using Controllers;
+﻿using GameDisplay.Controllers;
+using GameDisplay.Views;
 using Logic;
 using Logic.Data;
 using Logic.Interfaces;
@@ -7,7 +8,6 @@ using Logic.Services;
 using Services.Interfaces;
 using Tools;
 using UnityEngine;
-using View;
 
 namespace Services
 {
@@ -15,6 +15,7 @@ namespace Services
     {
         private const string PlayerPath = "Player";
         private const string BallPath = "Ball";
+        private const string CameraPath = "Camera";
 
         private readonly IAssetProvider _assetProvider;
 
@@ -56,6 +57,12 @@ namespace Services
             var unused = new BallController(model, view);
             model.SetRandomDirection();
             return model;
+        }
+
+        public Camera CreateCamera(Vector3 position)
+        {
+            var pref = _assetProvider.LoadAsset<Camera>(CameraPath);
+            return Object.Instantiate(pref, position, Quaternion.identity);
         }
     }
 }

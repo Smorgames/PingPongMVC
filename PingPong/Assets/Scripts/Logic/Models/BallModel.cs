@@ -6,8 +6,8 @@ namespace Logic.Models
 {
     public class BallModel : ITransform2D, ICollider
     {
-        private const float MinRandomDirection = -1f;
-        private const float MaxRandomDirection = 1f;
+        private const float XRandomDirection = 1f;
+        private const float YRandomDirection = 0.25f;
         
         public Transform2D Transform { get; }
         public SquareCollider Collider { get; }
@@ -31,8 +31,8 @@ namespace Logic.Models
 
         public void SetRandomDirection()
         {
-            var x = _math.Random(MinRandomDirection, MaxRandomDirection);
-            var y = _math.Random(MinRandomDirection, MaxRandomDirection);
+            var x = _math.Random(-XRandomDirection, XRandomDirection);
+            var y = _math.Random(-YRandomDirection, YRandomDirection);
             var direction = new UniVector2(x, y).Normalize();
             SetDirection(direction);
         }

@@ -11,14 +11,12 @@ namespace Logic.Models
 
         private readonly IMathService _math;
         private readonly CollidesObserver _collidesObserver;
-        private readonly float _speed;
-        private readonly float _yLimit;
+        private readonly PlayerData _data;
 
         public PlayerModel(PlayerData data, ITransform2D ball, IMathService math)
         {
+            _data = data;
             _math = math;
-            _speed = data.Speed;
-            _yLimit = data.YLimit;
             Transform = new Transform2D(data.StartPosition, data.StartDirection);
             Collider = new SquareCollider(data.ColliderSize.X, data.ColliderSize.Y, this);
             _collidesObserver = new CollidesObserver(this, ball);
@@ -28,7 +26,7 @@ namespace Logic.Models
         public void MovePosition(int yDirection, float frameUpdateTick)
         {
             Transform.SetDirection(new UniVector2(0f, yDirection));
-            var newPosition = Transform.Direction * _speed * frameUpdateTick + Transform.Position;
+            var newPosition = Transform.Direction * _data.Speed * frameUpdateTick + Transform.Position;
             var clampedPosition = ClampPositionByY(newPosition);
             Transform.SetPosition(clampedPosition);
         }
@@ -44,14 +42,16 @@ namespace Logic.Models
 
         private void BallCollidesPlayer()
         {
-            
+            var direction = _collidesObserver.Observable.Transform.Direction;
+            var newDirection = new UniVector2(-direction.X, direction.Y);
+            _collidesObserver.Observable.Transform.SetDirection(newDirection);
         }
 
         private UniVector2 ClampPositionByY(UniVector2 position)
         {
-            if (_math.Abs(position.Y) >= _yLimit)
+            if (_math.Abs(position.Y) >= _data.YLimit)
             {
-                var yValue = position.Y > 0 ? _yLimit : -_yLimit;
+                var yValue = position.Y > 0 ? _data.YLimit : -_data.YLimit;
                 position.SetCoordinates(position.X, yValue);
             }
             

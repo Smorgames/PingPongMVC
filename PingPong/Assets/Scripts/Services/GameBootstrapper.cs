@@ -3,12 +3,11 @@ using Logic.Data;
 using Logic.Interfaces;
 using Logic.Models;
 using Logic.Services;
-using Services;
 using Services.Interfaces;
 using Tools;
 using UnityEngine;
 
-namespace MonoBehaviours
+namespace Services
 {
     public class GameBootstrapper : MonoBehaviour
     {
@@ -20,11 +19,12 @@ namespace MonoBehaviours
             IAssetProvider assetProvider = new AssetProvider();
             IGameFactory gameFactory = new GameFactory(assetProvider);
 
+            gameFactory.CreateCamera(new Vector3(0f, 0f, -10f));
             var ball = gameFactory.CreateBall(math);
             gameFactory.CreatePlayer(math, ball);
 
             //Tests
-            ColliderTest(math, ball);
+            //ColliderTest(math, ball);
         }
         
         // Testing of Collider point changing

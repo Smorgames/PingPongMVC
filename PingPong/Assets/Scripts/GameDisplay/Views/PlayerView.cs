@@ -3,7 +3,7 @@ using Logic;
 using Tools;
 using UnityEngine;
 
-namespace View
+namespace GameDisplay.Views
 {
     public class PlayerView : MonoBehaviour
     {

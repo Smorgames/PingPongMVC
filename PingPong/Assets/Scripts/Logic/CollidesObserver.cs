@@ -8,14 +8,15 @@ namespace Logic
         public Action OnCollisionStart;
         public Action OnCollisionEnd;
 
-        private readonly ITransform2D _observable;
+        public ITransform2D Observable { get; }
+        
         private readonly ICollider _collider;
         private bool _isColliding;
 
         public CollidesObserver(ICollider collider, ITransform2D observable)
         {
             _collider = collider;
-            _observable = observable;
+            Observable = observable;
         }
 
         public void CheckForCollision()
@@ -35,10 +36,10 @@ namespace Logic
 
         private bool ObservableCollidesWithObject()
         {
-            return _observable.Transform.Position.X >= _collider.Collider.LeftBotPoint.X &&
-                   _observable.Transform.Position.X <= _collider.Collider.RightTopPoint.X &&
-                   _observable.Transform.Position.Y >= _collider.Collider.LeftBotPoint.Y &&
-                   _observable.Transform.Position.Y <= _collider.Collider.RightTopPoint.Y;
+            return Observable.Transform.Position.X >= _collider.Collider.LeftBotPoint.X &&
+                   Observable.Transform.Position.X <= _collider.Collider.RightTopPoint.X &&
+                   Observable.Transform.Position.Y >= _collider.Collider.LeftBotPoint.Y &&
+                   Observable.Transform.Position.Y <= _collider.Collider.RightTopPoint.Y;
         }
     }
 }
