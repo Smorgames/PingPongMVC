@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using Logic.Models;
 using View;
 
 namespace Controllers
@@ -19,13 +19,17 @@ namespace Controllers
         private void Subscriptions()
         {
             Model.Transform.OnPositionChange += ModelPositionChanged;
+            View.OnUpdate += ViewUpdateTick;
             View.OnMoveRequest += ViewMoveRequest;
         }
 
         private void ModelPositionChanged() => 
             View.SetPosition(Model.Transform.Position);
 
-        private void ViewMoveRequest(int yDirection, float frameUpdateDelta) => 
-            Model.MovePosition(yDirection, frameUpdateDelta);
+        private void ViewUpdateTick() => 
+            Model.FrameUpdateTick();
+
+        private void ViewMoveRequest(int yDirection, float frameUpdateTick) => 
+            Model.MovePosition(yDirection, frameUpdateTick);
     }
 }

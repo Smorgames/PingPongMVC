@@ -1,28 +1,44 @@
-﻿using Models;
+using Logic;
+using Logic.Data;
+using Logic.Interfaces;
+using Logic.Models;
+using Logic.Services;
+using Services;
+using Services.Interfaces;
+using Tools;
 using UnityEngine;
 
-namespace MonoBehaviour
+namespace MonoBehaviours
 {
-    public class Test : UnityEngine.MonoBehaviour
+    public class GameBootstrapper : MonoBehaviour
     {
-        private void Start()
+        private void Awake()
         {
-            //ColliderTest();
-        }
+            IMathService math = new MathService();
+            UniVector2.InitMathService(math);
 
+            IAssetProvider assetProvider = new AssetProvider();
+            IGameFactory gameFactory = new GameFactory(assetProvider);
+
+            var ball = gameFactory.CreateBall(math);
+            gameFactory.CreatePlayer(math, ball);
+
+            //Tests
+            ColliderTest(math, ball);
+        }
+        
         // Testing of Collider point changing
-        private static void ColliderTest()
+        private static void ColliderTest(IMathService math, ITransform2D ball)
         {
             var playerData = new PlayerData
             {
                 StartPosition = new UniVector2(),
                 StartDirection = new UniVector2(),
-                ColliderHeight = 1,
-                ColliderLength = 4,
+                ColliderSize = new UniVector2(4, 1),
                 Speed = 5f,
                 YLimit = 4f
             };
-            var playerModel = new PlayerModel(playerData, null);
+            var playerModel = new PlayerModel(playerData, ball, math);
             // Player position (0; 0)
             // Collider size (4; 1)
             var assert1 = 

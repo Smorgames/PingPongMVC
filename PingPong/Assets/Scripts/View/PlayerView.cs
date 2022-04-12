@@ -1,17 +1,22 @@
 ﻿using System;
+using Logic;
+using Tools;
 using UnityEngine;
 
 namespace View
 {
-    public class PlayerView : UnityEngine.MonoBehaviour
+    public class PlayerView : MonoBehaviour
     {
         private const int UpDirection = 1;
         private const int DownDirection = -1;
         
         public Action<int, float> OnMoveRequest;
+        public Action OnUpdate;
 
         private void Update()
         {
+            OnUpdate?.Invoke();
+            
             if (Input.GetKey(KeyCode.W))
                 OnMoveRequest?.Invoke(UpDirection, Time.deltaTime);
             

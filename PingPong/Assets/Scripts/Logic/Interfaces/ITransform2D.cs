@@ -1,4 +1,4 @@
-﻿namespace Interfaces
+﻿namespace Logic.Interfaces
 {
     public interface ITransform2D
     {

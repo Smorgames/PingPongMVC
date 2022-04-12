@@ -1,7 +1,7 @@
 ﻿using System;
-using Interfaces;
+using Logic.Interfaces;
 
-namespace Models
+namespace Logic
 {
     public class CollidesObserver
     {
@@ -23,13 +23,13 @@ namespace Models
             if (ObservableCollidesWithObject() && !_isColliding)
             {
                 _isColliding = true;
-                OnCollisionStart.Invoke();
+                OnCollisionStart?.Invoke();
             }
 
             if (!ObservableCollidesWithObject() && _isColliding)
             {
                 _isColliding = false;
-                OnCollisionEnd.Invoke();
+                OnCollisionEnd?.Invoke();
             }
         }
 
