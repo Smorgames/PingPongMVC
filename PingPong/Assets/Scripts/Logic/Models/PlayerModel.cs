@@ -20,7 +20,7 @@ namespace Logic.Models
             Transform = new Transform2D(data.StartPosition, data.StartDirection);
             Collider = new SquareCollider(data.ColliderSize.X, data.ColliderSize.Y, this);
             _collidesObserver = new CollidesObserver(this, ball);
-            _collidesObserver.OnCollisionStart += BallCollidesPlayer;
+            _collidesObserver.OnCollisionStart += BallCollidesWithPlayer;
         }
 
         public void MovePosition(int yDirection, float frameUpdateTick)
@@ -40,7 +40,7 @@ namespace Logic.Models
         public void FrameUpdateTick() => 
             _collidesObserver.CheckForCollision();
 
-        private void BallCollidesPlayer()
+        private void BallCollidesWithPlayer()
         {
             var direction = _collidesObserver.Observable.Transform.Direction;
             var newDirection = new UniVector2(-direction.X, direction.Y);

@@ -30,7 +30,7 @@ namespace Services
             {
                 StartPosition = new UniVector2(5f, 0f),
                 StartDirection = new UniVector2(),
-                ColliderSize = new UniVector2(1f, 1f),
+                ColliderSize = new UniVector2(0.5f, 2f),
                 Speed = 10f,
                 YLimit = 4f
             };
