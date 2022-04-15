@@ -12,10 +12,10 @@ namespace Logic.Models
         public Transform2D Transform { get; }
         public SquareCollider Collider { get; }
 
-        private readonly IMathService _math;
+        private readonly IMath _math;
         private readonly float _speed;
 
-        public BallModel(BallData data, IMathService math)
+        public BallModel(BallData data, IMath math)
         {
             _math = math;
             _speed = data.Speed;
@@ -34,10 +34,10 @@ namespace Logic.Models
             var x = _math.Random(-XRandomDirection, XRandomDirection);
             var y = _math.Random(-YRandomDirection, YRandomDirection);
             var direction = new UniVector2(x, y).Normalize();
-            SetDirection(direction);
-        }
-        
-        public void SetDirection(UniVector2 direction) => 
             Transform.SetDirection(direction);
+        }
+
+        public void SetPosition(UniVector2 position) => 
+            Transform.SetPosition(position);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using GameDisplay.Controllers;
 using GameDisplay.Views;
-using Logic;
 using Logic.Data;
 using Logic.Interfaces;
 using Logic.Models;
@@ -13,9 +12,11 @@ namespace Services
 {
     public class GameFactory : IGameFactory
     {
+        private const string UpdateObjectName = "UpdateObject";
+        
         private const string PlayerPath = "Player";
         private const string BallPath = "Ball";
-        private const string CameraPath = "Camera";
+        private const string BackgroundPath = "Background";
 
         private readonly IAssetProvider _assetProvider;
 
@@ -24,45 +25,48 @@ namespace Services
             _assetProvider = assetProvider;
         }
 
-        public PlayerModel CreatePlayer(IMathService math, ITransform2D ball)
+        public PlayerModel CreatePlayer(PlayerData data, IMath math, ITransform2D ball)
         {
-            var playerData = new PlayerData
-            {
-                StartPosition = new UniVector2(5f, 0f),
-                StartDirection = new UniVector2(),
-                ColliderSize = new UniVector2(0.5f, 2f),
-                Speed = 10f,
-                YLimit = 4f
-            };
-            var model = new PlayerModel(playerData, ball, math);
+            var model = new PlayerModel(data, ball, math);
             var pref = _assetProvider.LoadAsset<PlayerView>(PlayerPath);
-            var view = Object.Instantiate(pref, playerData.StartPosition.ToVector2(), Quaternion.identity);
+            var view = Object.Instantiate(pref, data.StartPosition.ToVector2(), Quaternion.identity);
             var unused = new PlayerController(model, view);
             return model;
         }
 
-        public BallModel CreateBall(IMathService math)
+        public BallModel CreateBall(BallData data, IMath math)
         {
-            var ballData = new BallData
-            {
-                StartPosition = new UniVector2(),
-                StartDirection = new UniVector2(),
-                ColliderSize = new UniVector2(1f, 1f),
-                Speed = 5f
-            };
-
-            var model = new BallModel(ballData, math);
+            var model = new BallModel(data, math);
             var pref = _assetProvider.LoadAsset<BallView>(BallPath);
-            var view = Object.Instantiate(pref, ballData.StartPosition.ToVector2(), Quaternion.identity);
+            var view = Object.Instantiate(pref, data.StartPosition.ToVector2(), Quaternion.identity);
             var unused = new BallController(model, view);
             model.SetRandomDirection();
             return model;
         }
 
-        public Camera CreateCamera(Vector3 position)
+        public UpdateObject CreateUpdateObject()
         {
-            var pref = _assetProvider.LoadAsset<Camera>(CameraPath);
-            return Object.Instantiate(pref, position, Quaternion.identity);
+            var updateObject = new GameObject(UpdateObjectName);
+            return updateObject.AddComponent<UpdateObject>();
+        }
+
+        public void CreateWall(WallData data, ITransform2D ball, UpdateObject updateObject)
+        {
+            var model = new WallModel(data, ball);
+            var controller = new WallController(model, updateObject);
+        }
+
+        public GateModel CreateGate(GateData data, ITransform2D ball, UpdateObject updateObject)
+        {
+            var model = new GateModel(data, ball);
+            var controller = new GateController(model, updateObject);
+            return model;
+        }
+
+        public void CreateBackground()
+        {
+            var pref = _assetProvider.LoadAsset<GameObject>(BackgroundPath);
+            Object.Instantiate(pref);
         }
     }
 }

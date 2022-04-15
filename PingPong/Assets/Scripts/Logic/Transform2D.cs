@@ -1,5 +1,4 @@
 ﻿using System;
-using Logic.Interfaces;
 
 namespace Logic
 {
@@ -9,13 +8,17 @@ namespace Logic
     
         public UniVector2 Position { get; }
         public UniVector2 Direction { get; }
-    
-        private ITransform2D _transform;
-
+        
         public Transform2D(UniVector2 position, UniVector2 direction)
         {
             Position = position;
             Direction = direction;
+        }
+
+        public Transform2D(UniVector2 position)
+        {
+            Position = position;
+            Direction = new UniVector2();
         }
 
         public void SetPosition(UniVector2 position)

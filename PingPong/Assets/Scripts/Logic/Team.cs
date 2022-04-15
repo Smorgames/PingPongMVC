@@ -1,6 +1,6 @@
 ﻿namespace Logic
 {
-    public enum PlayerType
+    public enum Team
     {
         First,
         Second

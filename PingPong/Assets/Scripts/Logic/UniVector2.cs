@@ -5,7 +5,7 @@ namespace Logic
     public class UniVector2
     {
         private const float EqualThreshold = 0.00001f;
-        private static IMathService _math;
+        private static IMath _math;
 
         public float X { get; private set; }
         public float Y { get; private set; }
@@ -22,8 +22,8 @@ namespace Logic
             Y = 0f;
         }
 
-        public static void InitMathService(IMathService mathService) => 
-            _math ??= mathService;
+        public static void InitMathService(IMath math) => 
+            _math ??= math;
         
         public UniVector2 Normalize()
         {

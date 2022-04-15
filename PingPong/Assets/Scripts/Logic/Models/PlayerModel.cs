@@ -9,16 +9,16 @@ namespace Logic.Models
         public Transform2D Transform { get; }
         public SquareCollider Collider { get; }
 
-        private readonly IMathService _math;
+        private readonly IMath _math;
         private readonly CollidesObserver _collidesObserver;
         private readonly PlayerData _data;
 
-        public PlayerModel(PlayerData data, ITransform2D ball, IMathService math)
+        public PlayerModel(PlayerData data, ITransform2D ball, IMath math)
         {
             _data = data;
             _math = math;
-            Transform = new Transform2D(data.StartPosition, data.StartDirection);
-            Collider = new SquareCollider(data.ColliderSize.X, data.ColliderSize.Y, this);
+            Transform = new Transform2D(_data.StartPosition, _data.StartDirection);
+            Collider = new SquareCollider(_data.ColliderSize.X, _data.ColliderSize.Y, this);
             _collidesObserver = new CollidesObserver(this, ball);
             _collidesObserver.OnCollisionStart += BallCollidesWithPlayer;
         }
@@ -37,8 +37,11 @@ namespace Logic.Models
             Transform.SetPosition(clampedPosition);
         }
 
-        public void FrameUpdateTick() => 
+        public void CheckForBallCollision() => 
             _collidesObserver.CheckForCollision();
+
+        public void ResetPosition() => 
+            Transform.SetPosition(_data.StartPosition);
 
         private void BallCollidesWithPlayer()
         {

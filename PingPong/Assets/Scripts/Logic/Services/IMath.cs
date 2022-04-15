@@ -1,6 +1,6 @@
 ﻿namespace Logic.Services
 {
-    public interface IMathService
+    public interface IMath
     {
         float Abs(float number);
         float Sqrt(float number);

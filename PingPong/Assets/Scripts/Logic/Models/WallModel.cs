@@ -12,16 +12,19 @@ namespace Logic.Models
 
         public WallModel(WallData wallData, ITransform2D ball)
         {
-            Transform = new Transform2D(wallData.StartPosition, wallData.StartDirection);
+            Transform = new Transform2D(wallData.StartPosition);
             Collider = new SquareCollider(wallData.ColliderSize.X, wallData.ColliderSize.Y, this);
             _collidesObserver = new CollidesObserver(this, ball);
             _collidesObserver.OnCollisionStart += BallCollidesWithWall;
         }
 
+        public void CheckForBallCollision() => 
+            _collidesObserver.CheckForCollision();
+
         private void BallCollidesWithWall()
         {
             var direction = _collidesObserver.Observable.Transform.Direction;
-            var newDirection = new UniVector2(-direction.X, direction.Y);
+            var newDirection = new UniVector2(direction.X, -direction.Y);
             _collidesObserver.Observable.Transform.SetDirection(newDirection);
         }
     }

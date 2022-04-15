@@ -27,7 +27,7 @@ namespace GameDisplay.Controllers
             View.SetPosition(Model.Transform.Position);
 
         private void ViewUpdateTick() => 
-            Model.FrameUpdateTick();
+            Model.CheckForBallCollision();
 
         private void ViewMoveRequest(int yDirection, float frameUpdateTick) => 
             Model.MovePosition(yDirection, frameUpdateTick);

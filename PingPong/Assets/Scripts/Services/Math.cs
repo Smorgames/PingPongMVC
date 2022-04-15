@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Services
 {
-    public class MathService : IMathService
+    public class Math : IMath
     {
         public float Abs(float number) => Mathf.Abs(number);
         public float Sqrt(float number) => Mathf.Sqrt(number);
