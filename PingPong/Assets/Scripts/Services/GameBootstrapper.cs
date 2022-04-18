@@ -1,5 +1,4 @@
 using Logic;
-using Logic.Data;
 using Logic.Services;
 using Services.Interfaces;
 using UnityEngine;
@@ -18,8 +17,9 @@ namespace Services
             IAssetProvider assetProvider = new AssetProvider();
             IGameFactory gameFactory = new GameFactory(assetProvider);
             IFactoryForUI uiFactory = new FactoryForUI(assetProvider);
+            ISceneLoader sceneLoader = new SceneLoader();
 
-            var container = new DependencyContainer(math, gameFactory, uiFactory);
+            var container = new DependencyContainer(math, gameFactory, uiFactory, sceneLoader);
             var game = new Game(container, config);
         }
     }

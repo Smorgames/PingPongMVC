@@ -18,7 +18,7 @@ namespace GameDisplay.Controllers
 
         private void Subscriptions()
         {
-            Model.Transform.OnPositionChange += ModelPositionChanged;
+            Model.Transform.OnPositionChanged += ModelPositionChanged;
             View.OnMoveRequest += ViewMoveRequest;
         }
 

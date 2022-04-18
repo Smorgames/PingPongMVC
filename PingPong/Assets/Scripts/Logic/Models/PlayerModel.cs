@@ -8,6 +8,7 @@ namespace Logic.Models
     {
         public Transform2D Transform { get; }
         public SquareCollider Collider { get; }
+        public Team MyTeam => _data.Team;
 
         private readonly IMath _math;
         private readonly CollidesObserver _collidesObserver;
@@ -17,7 +18,7 @@ namespace Logic.Models
         {
             _data = data;
             _math = math;
-            Transform = new Transform2D(_data.StartPosition, _data.StartDirection);
+            Transform = new Transform2D(_data.StartPosition.Copy(), _data.StartDirection);
             Collider = new SquareCollider(_data.ColliderSize.X, _data.ColliderSize.Y, this);
             _collidesObserver = new CollidesObserver(this, ball);
             _collidesObserver.OnCollisionStart += BallCollidesWithPlayer;

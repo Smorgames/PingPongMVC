@@ -9,6 +9,7 @@ namespace Logic
 
         public float X { get; private set; }
         public float Y { get; private set; }
+        public float Magnitude => _math.Sqrt(X * X + Y * Y);
 
         public UniVector2(float x, float y)
         {
@@ -32,8 +33,6 @@ namespace Logic
             Y /= magnitude;
             return this;
         }
-    
-        public float Magnitude => _math.Sqrt(X * X + Y * Y);
 
         public void SetCoordinates(UniVector2 coordinates) => 
             SetCoordinates(coordinates.X, coordinates.Y);
@@ -43,6 +42,9 @@ namespace Logic
             X = x;
             Y = y;
         }
+
+        public UniVector2 Copy() => 
+            new UniVector2(X, Y);
 
         public static UniVector2 operator +(UniVector2 a, UniVector2 b) =>
             new UniVector2(a.X + b.X, a.Y + b.Y);

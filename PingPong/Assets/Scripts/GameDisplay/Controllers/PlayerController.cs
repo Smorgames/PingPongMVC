@@ -12,13 +12,14 @@ namespace GameDisplay.Controllers
         {
             Model = playerModel;
             View = playerView;
+            View.SetTeam(Model.MyTeam);
 
             Subscriptions();
         }
 
         private void Subscriptions()
         {
-            Model.Transform.OnPositionChange += ModelPositionChanged;
+            Model.Transform.OnPositionChanged += ModelPositionChanged;
             View.OnUpdate += ViewUpdateTick;
             View.OnMoveRequest += ViewMoveRequest;
         }

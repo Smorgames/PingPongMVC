@@ -4,7 +4,7 @@ namespace Logic
 {
     public class Transform2D
     {
-        public Action OnPositionChange;
+        public Action OnPositionChanged;
     
         public UniVector2 Position { get; }
         public UniVector2 Direction { get; }
@@ -24,7 +24,7 @@ namespace Logic
         public void SetPosition(UniVector2 position)
         {
             Position.SetCoordinates(position);
-            OnPositionChange?.Invoke();
+            OnPositionChanged?.Invoke();
         }
 
         public void SetDirection(UniVector2 direction) => 

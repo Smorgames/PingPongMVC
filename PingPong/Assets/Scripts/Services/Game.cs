@@ -1,6 +1,5 @@
 ﻿using System;
 using Logic;
-using Logic.Data;
 using Logic.Models;
 using UnityEngine;
 
@@ -8,7 +7,6 @@ namespace Services
 {
     public class Game
     {
-        public Action<Team> OnWin;
         public Action<Team> OnGoal;
         
         public const int ScoreLimit = 5;
@@ -71,10 +69,8 @@ namespace Services
 
         private void CheckForWinGame()
         {
-            if (FirstPlayerScore >= ScoreLimit)
-                OnWin?.Invoke(Team.First);
-            if (SecondPlayerScore >= ScoreLimit)
-                OnWin?.Invoke(Team.Second);
+            if (FirstPlayerScore >= ScoreLimit || SecondPlayerScore >= ScoreLimit)
+                _container.SceneLoader.ReloadScene();
         }
 
         private void ResetGameState()

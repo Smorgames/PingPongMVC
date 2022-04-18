@@ -10,7 +10,7 @@ namespace Services
     {
         private const string CameraPath = "UI/Camera";
         private const string EventSystemPath = "UI/EventSystem";
-        private const string CanvasPath = "UI/Canvas";
+        private const string CanvasPath = "UI/ScoreDisplayCanvas";
         
         private readonly IAssetProvider _assetProvider;
 
